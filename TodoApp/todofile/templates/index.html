@@ -1,0 +1,50 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+    {% if messages %}
+        {% for mess in messages %}
+            <div class="alert alert-warring alert-dismissable" role="alert">
+                <button class="close" data-dismiss="alert">
+                    <small> <sup>X</sup></small>
+                </button>
+                {{mess}}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+
+    {% if all_items %}
+   <table class="table table-bordered">
+          <tr>
+              <td><center>All Tasks</center></td>
+
+          </tr>
+   </table>
+      <table class="table table-bordered">
+            {% for things in all_items %}
+                {% if things.complete %}
+                        <tr class="table-secondary">
+                            <td class="st"><center>{{ things.item }}</center></td>
+                            <td><center>{{ things.when }}</center></td>
+                            <td class="st"><center><a href="{% url 'edit' things.id %}">Edit </a></center></td>
+
+
+                            <td><center><a href="{% url 'uncut' things.id %}">Done</a></center></td>
+                            <td><center><a href="{% url 'delete' things.id %}"> Delete </a></center></td>
+                         </tr>
+                     {% else %}
+                         <tr >
+                             <td><center>{{ things.item }}</center></td>
+                             <td><center>{{ things.when }}</center></td>
+                             <td><center><a href="{% url 'edit' things.id %}">Edit</a></center></td>
+                             <td><center><a href="{% url 'cut' things.id %}">Mark as Done</a></center></td>
+                             <td><center><a href="{% url 'delete' things.id %}"> Delete </a></center></td>
+                         </tr>
+
+                 {% endif %}
+            {% endfor %}
+      </table>
+    {% endif %}
+
+{% endblock %}
